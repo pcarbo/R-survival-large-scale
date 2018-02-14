@@ -1,0 +1,24 @@
+Requirements
+============
+* R (ideally R >= 3.4)
+* python 3.x
+
+Set up interactive R environment
+================================
+Commands to run on RCC cluster:
+  cd code
+  module load R/3.4.3
+  R --no-save
+Check your R environment:
+  version$version.string // Hopefully >= 3.4.0
+  getwd()                // Should be .../code
+
+First demo
+==========
++ Generate a genotype data matrix with 1000 samples and 300,000 SNPs.
+    source("functions.R")
+    geno <- sim.geno(1e3,3e5)
+    dim(geno)
+    range(geno)
+    summary(colMeans(geno)/2)
++ 
