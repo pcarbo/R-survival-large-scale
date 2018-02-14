@@ -1,0 +1,25 @@
+---
+title: "A survival guide to large-scale data analysis in R"
+author: Peter Carbonetto
+output:
+  beamer_presentation:
+    template: beamer.tex
+    keep_tex: false
+---
+
+```{r knitr-options, echo=FALSE}
+knitr::opts_chunk$set(comment = "#",collapse = TRUE,fig.align = "center",
+                      results = "hide", fig.show = "hide", message = FALSE,
+		      warning = FALSE)
+```
+
+Outline
+=======
+
+1. Item 1.
+
+2. Item 2.
+
+3. Item 3.
+
+4. Item 4.
