@@ -18,14 +18,19 @@ sim.geno <- function (n, p, na.rate = 0) {
   return(matrix(as.double(geno),n,p,byrow = TRUE))
 }
 
-# TO DO: Explain here what this function does.
-scale.geno <- function (geno) {
-  p <- ncol(geno)
-  for (i in 1:p) {
-    x        <- geno[,i]
-    x        <- x - mean(x,na.rm = TRUE)
-    x        <- x / sd(x,na.rm = TRUE)
-    geno[,i] <- x
-  } 
-  return(geno)
+# TO DO: Explain here what this function does, and how to use it.
+scale_matrix <- function (X, verbose = TRUE) {
+
+  # Center and scale each column.
+  Y <- scale(X)
+
+  # Summarize the scaled matrix.
+  if (verbose) {
+    s0  <- apply(X,2,function (x) sd(x,na.rm = TRUE))
+    s1  <- apply(Y,2,function (x) sd(x,na.rm = TRUE))
+    dat <- rbind(summary(s0),summary(s1))
+    rownames(dat) <- c("before","after")
+    print(dat)
+  }
+  return(Y)
 }

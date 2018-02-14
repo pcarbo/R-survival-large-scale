@@ -14,6 +14,9 @@ Check your R environment:
   version$version.string // Hopefully >= 3.4.0
   getwd()                // Should be .../code
 
+Configure htop
+==============
+
 First demo
 ==========
 + This can be done either on the RCC cluster or on your laptop. But it
@@ -30,4 +33,5 @@ First demo
 + Quit R.
 + Center and scale the genotype matrix using my "naive"
   implementation:
+    export MEM_CHECK_INTERVAL=0.01
     ./monitor_memory.py Rscript scale.geno.R
