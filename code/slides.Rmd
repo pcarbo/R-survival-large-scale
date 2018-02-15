@@ -23,3 +23,33 @@ Outline
 3. Item 3.
 
 4. Item 4.
+
+It's your choice
+================
+
+Your may choose to...
+
++ Work through the examples on the RCC cluster.
+
++ Work through the examples on your laptop.
+
++ Pair up with your neighbour.
+
++ Follow what I do on the projector.
+
+*However*, note:
+
+1. A few of the examples will only run on the RCC cluster.
+
+2. I can't guarantee that the examples will produce the exact same
+result on your laptop.
+
+Software we will use
+====================
+
+1. R
+
+2. python3
+
+3. SLURM
+
