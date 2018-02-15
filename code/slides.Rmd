@@ -352,17 +352,23 @@ for improvement?
 Matrix scaling: one last attempt using Rcpp
 ===========================================
 
-The root issue is that R does not allow for "copying in place". We can
-circumvent this by implementing a C++ function that modified the input
-matrix directly. See files **scale.cpp** and **scale.geno.best.R** for
-how this is implemented.
+The root issue is that R does not allow for "copying in place".
+
++ We can circumvent this by implementing a C++ function that modifies
+the input matrix directly.
+
++ See files **scale.cpp** and **scale.geno.rcpp.R** for how this is
+implemented using the **Rcpp** package.
+
+Now try monitoring memory usage in the script that uses the Rcpp
+implementation:
 
 ```{bash, eval=FALSE}
-./monitor_memory.py Rscript scale.geno.best.R
+./monitor_memory.py Rscript scale.geno.rcpp.R
 ```
 
 Does this implementation have a smaller memory footprint than previous
-attempts? 
+attempts? Is there still room for improvement?
 
 Memory allocation in R: take-home points
 ========================================

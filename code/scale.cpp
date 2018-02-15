@@ -6,6 +6,9 @@ using namespace Rcpp;
 // input matrix X is modified directly. The return value can be
 // ignored; it is always 0.
 //
+// Input argument "a" must be the vector of column means, and input
+// "b" must be the vector of column standard deviations.
+//
 // [[Rcpp::export]]
 double scale_rcpp (NumericMatrix& X, NumericVector& a, NumericVector& b) {
   int    nr = X.nrow();
