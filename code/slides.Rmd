@@ -87,7 +87,7 @@ environment:
 of memory:
 
     ```
-    screen -S r-tutorial  // Optional.
+    screen -S r-tutorial  # Optional.
     sinteractive --partition=broadwl --mem=15G \
       --cpus-per-task=8 --time=3:00:00
     ```
@@ -141,7 +141,7 @@ Some useful htop keyboard shortcuts:
 + q to quit
 + M to sort processes by memory
 + p to toggle program paths
-+ H to toggle threads (for multithreaded computing).
++ H to toggle threads (for multithreaded computing)
 
 Initial setup (part 6)
 ======================
@@ -174,9 +174,9 @@ What's in the workshop packet
 
 ```
 R-survival-large-scale
-  / code
-  / data
-  / docs
-  / extras
-  / output
+  /code    # Source code used in demos.
+  /data    # "Raw" and processed data.
+  /docs    # Slides and other materials.
+  /extras  # Additional useful files.
+  /output  # All results are stored here.
 ```
