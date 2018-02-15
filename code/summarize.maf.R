@@ -1,4 +1,6 @@
-# TO DO: Explain here briefly what this script does.
+# Short script to compute and summarize the SNP minor allele
+# frequencies (MAFs) from a genotype matrix. Note that some of the
+# genotypes may be missing.
 cat("Loading genotype data.\n")
 load("../data/geno.RData")
 cat("Computing minor allele frequencies.\n")

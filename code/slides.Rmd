@@ -104,7 +104,7 @@ Initial setup (part 4)
 If you are using the RCC cluster, run these commands to download the
 workshop packet to your home directory (no spaces in URL):
 
-```
+```{bash, eval=FALSE}
 cd $HOME
 git clone https://github.com/pcarbo/ 
   R-survival-large-scale.git
@@ -119,20 +119,20 @@ Open up a separate Terminal window and connect to midway2.
 
 Connect to the same compute node:
 
-```
+```{bash, eval=FALSE}
 ssh $HOSTNAME
 ```
 
 Copy my htop configuration:
 
-```
+```{bash, eval=FALSE}
 mkdir -p ~/.config/htop
 cp extras/htoprc ~/.config/htop/
 ```
 
 Start htop:
 
-```
+```{bash, eval=FALSE}
 htop --user=<username>
 ```
 
@@ -193,10 +193,9 @@ genotype data matrix.
 
 We will use R for both tasks.
 
-+ We will monitor memory usage in R, and find ways to reduce memory
-usage.
++ We will monitor memory allocation in R, and find ways to reduce it.
 
-+ To monitor memory usage, we will use:
++ To monitor memory allocation, we will use:
 
     1. **htop**
 
@@ -213,39 +212,156 @@ Outline of the vignette:
 
 3. Monitor memory needed to scale genotypes.
 
-4. Attempt to reduce memory used in scaling matrix columns.
+4. Attempt to reduce memory used in scaling genotypes.
 
 Generate genotype data
 ======================
 
 We generate an $n \times p$ genotype matrix with $n = 1000$ samples,
-$p = 300,000 SNPs) and 1% missing genotypes.
+$p = 300,\!000$ SNPs and 1% missing genotypes.
 
 ```{r, sim-geno}
 source("sim.geno.R")
-geno <- sim.geno(n = 100,p = 3e5,na.rate = 0.01)
+set.seed(1)
+geno <- sim.geno(n = 1000,p = 3e5,na.rate = 0.01)
 dim(geno)
 range(geno,na.rm = TRUE)
 mean(is.na(geno))
 save(list = "geno",file = "../data/geno.RData")
 ```
 
-Compute and summarize minor allele frequencies
-==============================================
+Compute and summarize MAFs
+==========================
+
+We will run this code non-interactively to compute the MAFs:
+
+```{r summarize-maf}
+# Compute MAFs.
+maf <- colMeans(geno,na.rm = TRUE)/2
+maf <- pmin(maf,1 - maf)
+# Summarize distribution of MAFs.
+print(quantile(maf,seq(0,1,0.1)),digits = 2)
+```
 
 + Quit R.
-+ Compute and summarize the minor allele frequencies:
-    export MEM_CHECK_INTERVAL=0.01
-    ./monitor_memory.py Rscript summarize.maf.R
-+ Center and scale the genotype matrix using "scale" function:
-    ./monitor_memory.py Rscript scale.geno.R
-+ Center and scale the genotype matrix using my "scale_better" function:
-    ./monitor_memory.py Rscript scale.geno.better.R
+
++ Run these commands in the shell:
+
+    ```
+    pwd # Should be .../code
+    Rscript summarize.maf.R
+    ```
+
+Monitoring memory allocation
+============================
+
+While the R script is running, use **htop** in a separate Terminal
+session to profile memory allocation (look at the **RES** column).
+
++ If necessary, re-run the code.
+
+Re-run the R script again, this time using the Python program to
+measure memory usage every 0.01 s:
+
+```{bash, eval=FALSE}
+export MEM_CHECK_INTERVAL=0.01
+./monitor_memory.py Rscript summarize.maf.R
+```
+
+How well does the **htop** estimate agree with **max rss_memory** from
+the Python script?
+
+Center and scale the genotype matrix
+====================================
+
+Next, we will run this code non-interactively to center and scale the
+genotype matrix:
+
+```{r scale-geno}
+source("scale.R")
+cat("Loading genotype data.\n")
+load("../data/geno.RData")
+cat("Centering and scaling genotype matrix.\n")
+geno <- scale(geno)
+```
+
+Using the same methods as before, monitor memory usage.
+
+```{bash, eval=FALSE}
+./monitor_memory.py Rscript scale.geno.R
+```
+
+Does the scaling operation require more memory than computing MAFs?
+
++ If so, how much more?
+
++ How do you explain this result?
+
+A better implementation of "scale"
+==================================
+
+Motivated by out observations in the previous slide, let's try to
+reduce the memory usage by writing our own **scale** function.
+
+```{r scale-geno-better}
+scale_better <- function (X) {
+  for (i in 1:ncol(X)) {
+    X[,i] <- X[,i] - mean(X[,i],na.rm = TRUE)
+    X[,i] <- X[,i] / sd(X[,i],na.rm = TRUE)
+  }
+  return(X)
+}
+```
+
+Now run the script that uses our custom scaling function:
+
+```{bash, eval=FALSE}
+./monitor_memory.py Rscript scale.geno.better.R
+```
+
+Does **scale_better** require less memory than **scale**? Why? Is
+there more room to reduce memory usage?
+
+Matrix scaling: a second attempt 
+================================
+
+This next script attempts to reduce memory usage even further by
+avoiding any function calls that modify `geno` within a local
+environment.
+
+```{bash, eval=FALSE}
+./monitor_memory.py Rscript \
+  scale.geno.even.better.R
+```
+
+This is the code:
+
+```{r scale-geno-even-better}
+load("../data/geno.RData")
+for (i in 1:ncol(geno)) {
+  x        <- geno[,i]
+  x        <- x - mean(x,na.rm = TRUE)
+  x        <- x / sd(x,na.rm = TRUE)
+  geno[,i] <- x
+}
+```
+
+Is this an improvement over our previous attempt?
+
+
+
+Memory allocation in R: take-home points
+========================================
+
++ Important to measure memory in a fresh R session.
+
++ R duplicates objects aggressively.
+
+More advanced tools:
++ http://adv-r.had.co.nz/memory.html
++ profmem R package
+
 + Center and scale the genotype matrix without calling a function:
     ./monitor_memory.py Rscript scale.geno.even.better.R
 + Center and scale the genotype matrix in place using Rcpp:
     ./monitor_memory.py Rscript scale.geno.best.R
-
-More advanced:
-+ http://adv-r.had.co.nz/memory.html
-+ profmem R package
