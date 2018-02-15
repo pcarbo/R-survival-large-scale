@@ -3,5 +3,4 @@ source("functions.R")
 cat("Loading genotype data.\n")
 load("../data/geno.RData")
 cat("Centering and scaling genotype matrix.\n")
-geno <- scale(geno)
-
+geno <- scale_better(geno)

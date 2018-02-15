@@ -7,6 +7,7 @@ Set up interactive R environment
 ================================
 Commands to run on RCC cluster:
   sinteractive --partition=broadwl --mem=8G --cpus-per-task=1  
+  echo $HOSTNAME         // Make note of this.
   cd code
   module load R/3.4.3
   R --no-save
@@ -14,8 +15,19 @@ Check your R environment:
   version$version.string // Hopefully >= 3.4.0
   getwd()                // Should be .../code
 
-Configure htop
-==============
+Set up editor
+=============
+
+Set up htop
+===========
++ Connect to midway2.
++ ssh $HOSTNAME, where $HOSTNAME was identified above.
++ Copy extras/htoprc to hidden directory ~/.config/htop/
++ Run: htop --user=<cnetid>
++ Useful keystrokes:
+    - M to sort processes by memory.
+    - p to toggle program paths.
+    - H to toggle threads (for monitoring multithreaded computing).
 
 First demo
 ==========
@@ -31,7 +43,16 @@ First demo
     mean(is.na(geno))
     save(list = "geno",file = "../data/geno.RData")
 + Quit R.
-+ Center and scale the genotype matrix using my "naive"
-  implementation:
++ Compute and summarize the minor allele frequencies:
     export MEM_CHECK_INTERVAL=0.01
+    ./monitor_memory.py Rscript summarize.maf.R
++ Center and scale the genotype matrix using "scale" function:
     ./monitor_memory.py Rscript scale.geno.R
++ Center and scale the genotype matrix using my "scale_better" function:
+    ./monitor_memory.py Rscript scale.geno.better.R
++ Center and scale the genotype matrix without calling a function:
+    ./monitor_memory.py Rscript scale.geno.even.better.R
++ Center and scale the genotype matrix in place using Rcpp:
+    ./monitor_memory.py Rscript scale.geno.best.R
+
+

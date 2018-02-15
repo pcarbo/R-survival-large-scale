@@ -1,6 +1,3 @@
-# Right now all the functions will go in one file, functions.R. Maybe
-# later I will try to organize them better.
-
 # Generate SNP genotype data with minor allele frequencies that are
 # uniform over range [0.05,0.5]. Genotypes are simulated assuming all
 # SNPs are uncorrelated (i.e., unlinked). Inputs argument n and p are,
@@ -19,18 +16,17 @@ sim.geno <- function (n, p, na.rate = 0) {
 }
 
 # TO DO: Explain here what this function does, and how to use it.
-scale_matrix <- function (X, verbose = TRUE) {
+scale_better <- function (X) {
 
   # Center and scale each column.
-  Y <- scale(X)
-
-  # Summarize the scaled matrix.
-  if (verbose) {
-    s0  <- apply(X,2,function (x) sd(x,na.rm = TRUE))
-    s1  <- apply(Y,2,function (x) sd(x,na.rm = TRUE))
-    dat <- rbind(summary(s0),summary(s1))
-    rownames(dat) <- c("before","after")
-    print(dat)
+  p <- ncol(X)
+  for (i in 1:p) {
+    y     <- X[,i]
+    y     <- y - mean(y,na.rm = TRUE)
+    y     <- y / sd(y,na.rm = TRUE)
+    X[,i] <- y
   }
-  return(Y)
+  
+  # Return the scaled matrix.
+  return(X)
 }
