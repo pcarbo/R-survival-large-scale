@@ -1,12 +1,13 @@
 # TO DO: Explain here briefly what this script does.
+library(Rcpp)
 source("functions.R")
+sourceCpp("functions.cpp")
 cat("Loading genotype data.\n")
 load("../data/geno.RData")
 cat("Centering and scaling genotype matrix.\n")
+a <- colMeans(geno,na.rm = TRUE)
 p <- ncol(geno)
-for (i in 1:p) {
-  x         <- geno[,i]
-  x         <- x - mean(x,na.rm = TRUE)
-  x         <- x / sd(x,na.rm = TRUE)
-  geno[1,i] <- x[1]
-}
+b <- rep(0,p)
+for (i in 1:p)
+  b[i] <- sd(geno[,i],na.rm = TRUE)
+scale_rcpp(geno,a,b)
