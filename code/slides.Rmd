@@ -346,10 +346,23 @@ for (i in 1:ncol(geno)) {
 }
 ```
 
-Is this an improvement over our previous attempt?
+Is this an improvement over our previous attempt? Is there still room
+for improvement?
 
 Matrix scaling: one last attempt using Rcpp
 ===========================================
+
+The root issue is that R does not allow for "copying in place". We can
+circumvent this by implementing a C++ function that modified the input
+matrix directly. See files **scale.cpp** and **scale.geno.best.R** for
+how this is implemented.
+
+```{bash, eval=FALSE}
+./monitor_memory.py Rscript scale.geno.best.R
+```
+
+Does this implementation have a smaller memory footprint than previous
+attempts? 
 
 Memory allocation in R: take-home points
 ========================================

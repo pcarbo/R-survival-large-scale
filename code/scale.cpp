@@ -2,7 +2,9 @@
 
 using namespace Rcpp;
 
-// TO DO: Explain here what this function does, and how to use it in R.
+// The same as scale(X,center = TRUE,scale = TRUE), except that the
+// input matrix X is modified directly. The return value can be
+// ignored; it is always 0.
 //
 // [[Rcpp::export]]
 double scale_rcpp (NumericMatrix& X, NumericVector& a, NumericVector& b) {
