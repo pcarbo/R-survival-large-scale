@@ -87,6 +87,7 @@ environment:
 of memory:
 
     ```
+    screen -S r-tutorial  // Optional.
     sinteractive --partition=broadwl --mem=15G \
       --cpus-per-task=8 --time=3:00:00
     ```
@@ -112,6 +113,39 @@ git clone https://github.com/pcarbo/
 Initial setup (part 5)
 ======================
 
+Next, we set up **htop** for monitoring processes.
+
+Open up a separate Terminal window and connect to midway2.
+
+Connect to the same compute node:
+
+```
+ssh $HOSTNAME
+```
+
+Copy my htop configuration:
+
+```
+mkdir -p ~/.config/htop
+cp extras/htoprc ~/.config/htop/
+```
+
+Start up htop:
+
+```
+htop --user=<cnetid>
+```
+
+Some useful htop keyboard shortcuts:
+
++ q to quit
++ M to sort processes by memory
++ p to toggle program paths
++ H to toggle threads (for multithreaded computing).
+
+Initial setup (part 6)
+======================
+
 Move to the **code** folder in the git repository, and start up an
 interactive R environment:
 
@@ -121,8 +155,8 @@ module load R
 R --no-save
 ```
 
-Check which version of R you are running (hopefully it is version
-3.4.0 or greater):
+Check which version of R you are running (hopefully version 3.4.0 or
+greater):
 
 ```{r check-r-version}
 version$version.string
@@ -134,5 +168,15 @@ Also, before continuing, check your working directory:
 getwd()  # Should be .../code
 ```
 
+
 What's in the workshop packet
 =============================
+
+```
+R-survival-large-scale
+  / code
+  / data
+  / docs
+  / extras
+  / output
+```
