@@ -348,7 +348,8 @@ for (i in 1:ncol(geno)) {
 
 Is this an improvement over our previous attempt?
 
-
+Matrix scaling: one last attempt using Rcpp
+===========================================
 
 Memory allocation in R: take-home points
 ========================================
@@ -357,11 +358,8 @@ Memory allocation in R: take-home points
 
 + R duplicates objects aggressively.
 
++ Rcpp can circumvent many of these issues but requires much more work!
+
 More advanced tools:
 + http://adv-r.had.co.nz/memory.html
 + profmem R package
-
-+ Center and scale the genotype matrix without calling a function:
-    ./monitor_memory.py Rscript scale.geno.even.better.R
-+ Center and scale the genotype matrix in place using Rcpp:
-    ./monitor_memory.py Rscript scale.geno.best.R
