@@ -370,15 +370,25 @@ implementation:
 Does this implementation have a smaller memory footprint than previous
 attempts? Is there still room for improvement?
 
+Automating the analysis on the RCC cluster
+==========================================
+
+Now that we have a better understanding of the memory requirements.
+
 Memory allocation in R: take-home points
 ========================================
 
-+ Important to measure memory in a fresh R session.
++ Important to run the code in a fresh R session to properly assess
+memory needs.
 
 + R duplicates objects aggressively.
 
-+ Rcpp can circumvent many of these issues but requires much more work!
++ Rcpp can circumvent some of R's limitations, but requires much more
+effort!
 
-More advanced tools:
++ Another effort is the purrr package, but has not yet extended
+to matrices.
+
+More advanced tools for memory profiling:
 + http://adv-r.had.co.nz/memory.html
 + profmem R package
