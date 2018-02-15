@@ -32,12 +32,14 @@ R, as well as any additional packages used in
 [slides.Rmd](code/slides.Rmd). For more details, see the
 [Makefile](docs/Makefile).
 
++ See also the [instructor notes](NOTES.md).
+
 ## Credits
 
 These materials were developed by
 [Peter Carbonetto](http://pcarbo.github.io) at the
 [University of Chicago](https://www.uchicago.edu). Thank you to
 [Matthew Stephens](http://stephenslab.uchicago.edu) for his support
-and guidance. Also thanks to Gao Wang for sharing the Python script
-to profile memory usage.
+and guidance. Also thanks to [Gao Wang](https://github.com/gaow) for
+sharing the Python script to profile memory usage.
 

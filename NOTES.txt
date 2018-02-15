@@ -6,8 +6,8 @@ Requirements
 Set up interactive R environment
 ================================
 Commands to run on RCC cluster:
-  sinteractive --partition=broadwl --mem=16G --cpus-per-task=8 \
-    --time=2:00:00
+  sinteractive --partition=broadwl --mem=15G --cpus-per-task=8 \
+    --time=3:00:00
   echo $HOSTNAME         // Make note of this.
   cd code
   module load R/3.4.3

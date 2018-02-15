@@ -13,8 +13,8 @@ knitr::opts_chunk$set(comment = "#",collapse = TRUE,fig.align = "center",
 		      warning = FALSE)
 ```
 
-Outline
-=======
+Outline of tutorial
+===================
 
 1. Item 1.
 
@@ -41,15 +41,98 @@ Your may choose to...
 
 1. A few of the examples will only run on the RCC cluster.
 
-2. I can't guarantee that the examples will produce the exact same
-result on your laptop.
+2. The examples may not produce the exact same result on your laptop.
 
-Software we will use
+Software requirements
 ====================
 
-1. R
+1. R (ideally version 3.4.0 or greater)
 
-2. python3
+2. python 3.x
 
-3. SLURM
+3. SLURM (this is the job scheduler on the RCC cluster)
 
+Initial setup (part 1)
+======================
+
++ WiFi
+
++ Power outlets
+
++ YubiKeys
+
++ Pace, questions (e.g., keyboard shortcuts).
+
+Initial setup (part 2)
+======================
+
+Download the workshop packet on to your laptop.
+
++ URL: https://github.com/pcarbo/R-survival-large-scale
+
++ Open **slides.pdf** from the **docs** folder. This is useful for
+viewing and copying the code from the slides.
+
+Initial setup (part 3)
+======================
+
+If you are using the RCC cluster, set up your cluster computing
+environment:
+
++ Connect to midway2.
+
+    - See https://rcc.uchicago.edu/docs/connecting
+
++ Request a midway2 ("Broadwell") compute node with 8 CPUs and 15 GB
+of memory:
+
+    ```
+    sinteractive --partition=broadwl --mem=15G \
+      --cpus-per-task=8 --time=3:00:00
+    ```
+
++ Make note of the compute node you have connected to:
+
+    ```
+    echo $HOSTNAME
+    ```
+
+Initial setup (part 4)
+======================
+
+If you are using the RCC cluster, run these commands to download the
+workshop package to your home directory:
+
+```
+cd $HOME
+git clone https://github.com/pcarbo/ 
+  R-survival-large-scale.git
+```
+
+Initial setup (part 5)
+======================
+
+Move to the **code** folder in the git repository, and start up an
+interactive R environment:
+
+```{bash, eval=FALSE}
+cd code
+module load R
+R --no-save
+```
+
+Check which version of R you are running (hopefully it is version
+3.4.0 or greater):
+
+```{r check-r-version}
+version$version.string
+```
+
+Also, before continuing, check your working directory:
+
+```{r check-wd}
+getwd()  # Should be .../code
+```
+
+What's in the workshop packet
+=============================
