@@ -1,15 +1,3 @@
-Set up htop
-===========
-+ Connect to midway2.
-+ ssh $HOSTNAME, where $HOSTNAME was identified above.
-+ Copy extras/htoprc to hidden directory ~/.config/htop/
-+ Run: htop --user=<cnetid>
-+ Useful keystrokes:
-    - q to quit.
-    - M to sort processes by memory.
-    - p to toggle program paths.
-    - H to toggle threads (for monitoring multithreaded computing).
-
 First demo
 ==========
 + This can be done either on the RCC cluster or on your laptop. But it

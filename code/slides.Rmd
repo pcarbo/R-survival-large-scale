@@ -46,7 +46,7 @@ Your may choose to...
 Software requirements
 ====================
 
-1. R (ideally version 3.4.0 or greater)
+1. R (ideally,  version 3.4.0 or greater)
 
 2. python 3.x
 
@@ -66,7 +66,7 @@ Initial setup (part 1)
 Initial setup (part 2)
 ======================
 
-Download the workshop packet on to your laptop.
+Download the workshop packet to your laptop.
 
 + URL: https://github.com/pcarbo/R-survival-large-scale
 
@@ -102,7 +102,7 @@ Initial setup (part 4)
 ======================
 
 If you are using the RCC cluster, run these commands to download the
-workshop package to your home directory:
+workshop packet to your home directory (no spaces in URL):
 
 ```
 cd $HOME
@@ -130,10 +130,10 @@ mkdir -p ~/.config/htop
 cp extras/htoprc ~/.config/htop/
 ```
 
-Start up htop:
+Start htop:
 
 ```
-htop --user=<cnetid>
+htop --user=<username>
 ```
 
 Some useful htop keyboard shortcuts:
@@ -180,3 +180,72 @@ R-survival-large-scale
   /extras  # Additional useful files.
   /output  # All results are stored here.
 ```
+
+Investigation: How to measure memory in R, and use it effectively
+=================================================================
+
+We have two tasks:
+
+1. Compute the SNP minor allele frequencies (MAFs) from the a large
+genotype data matrix.
+
+2. Center and scale the columns of the genotype matrix.
+
+We will use R for both tasks.
+
++ We will monitor memory usage in R, and find ways to reduce memory
+usage.
+
++ To monitor memory usage, we will use:
+
+    1. **htop**
+
+    2. **monitor_memory.py**, a Python script.
+
+Vignette: How to measure memory, and use it effectively
+=======================================================
+
+Outline of the vignette:
+
+1. Simulate a genotype data matrix, and save the data.
+
+2. Monitor memory needed to compute MAFs.
+
+3. Monitor memory needed to scale genotypes.
+
+4. Attempt to reduce memory used in scaling matrix columns.
+
+Generate genotype data
+======================
+
+We generate an $n \times p$ genotype matrix with $n = 1000$ samples,
+$p = 300,000 SNPs) and 1% missing genotypes.
+
+```{r, sim-geno}
+source("sim.geno.R")
+geno <- sim.geno(n = 100,p = 3e5,na.rate = 0.01)
+dim(geno)
+range(geno,na.rm = TRUE)
+mean(is.na(geno))
+save(list = "geno",file = "../data/geno.RData")
+```
+
+Compute and summarize minor allele frequencies
+==============================================
+
++ Quit R.
++ Compute and summarize the minor allele frequencies:
+    export MEM_CHECK_INTERVAL=0.01
+    ./monitor_memory.py Rscript summarize.maf.R
++ Center and scale the genotype matrix using "scale" function:
+    ./monitor_memory.py Rscript scale.geno.R
++ Center and scale the genotype matrix using my "scale_better" function:
+    ./monitor_memory.py Rscript scale.geno.better.R
++ Center and scale the genotype matrix without calling a function:
+    ./monitor_memory.py Rscript scale.geno.even.better.R
++ Center and scale the genotype matrix in place using Rcpp:
+    ./monitor_memory.py Rscript scale.geno.best.R
+
+More advanced:
++ http://adv-r.had.co.nz/memory.html
++ profmem R package

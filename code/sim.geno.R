@@ -15,18 +15,3 @@ sim.geno <- function (n, p, na.rate = 0) {
   return(matrix(as.double(geno),n,p,byrow = TRUE))
 }
 
-# TO DO: Explain here what this function does, and how to use it.
-scale_better <- function (X) {
-
-  # Center and scale each column.
-  p <- ncol(X)
-  for (i in 1:p) {
-    y     <- X[,i]
-    y     <- y - mean(y,na.rm = TRUE)
-    y     <- y / sd(y,na.rm = TRUE)
-    X[,i] <- y
-  }
-  
-  # Return the scaled matrix.
-  return(X)
-}
