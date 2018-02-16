@@ -201,8 +201,8 @@ We will use R for both tasks.
 
     2. **monitor_memory.py**, a Python script.
 
-Vignette: How to measure memory, and use it effectively
-=======================================================
+Investigation: How to measure memory in R, and use it effectively
+=================================================================
 
 Outline of the vignette:
 
@@ -354,8 +354,8 @@ Matrix scaling: one last attempt using Rcpp
 
 The root issue is that R does not allow for "copying in place".
 
-+ We can circumvent this by implementing a C++ function that modifies
-the input matrix directly.
++ We can circumvent this by implementing a C++ function *that modifies
+the input matrix directly.*
 
 + See files **scale.cpp** and **scale.geno.rcpp.R** for how this is
 implemented using the **Rcpp** package.
@@ -370,25 +370,26 @@ implementation:
 Does this implementation have a smaller memory footprint than previous
 attempts? Is there still room for improvement?
 
-Automating the analysis on the RCC cluster
-==========================================
-
-Now that we have a better understanding of the memory requirements.
-
 Memory allocation in R: take-home points
 ========================================
 
-+ Important to run the code in a fresh R session to properly assess
-memory needs.
-
-+ R duplicates objects aggressively.
++ R duplicates objects aggressively. This can be an issue with objects
+are large.
 
 + Rcpp can circumvent some of R's limitations, but requires much more
 effort!
 
-+ Another effort is the purrr package, but has not yet extended
-to matrices.
++ An interesting effort is the **purrr** package. But it does not yet
+handle matrices.
 
-More advanced tools for memory profiling:
-+ http://adv-r.had.co.nz/memory.html
-+ profmem R package
++ To accurately assess memory needs, run the code in a fresh R session.
+
++ For more advanced tools for memory profiling, see:
+    - http://adv-r.had.co.nz/memory.html
+    - profmem R package
+
+Investigation: How to automate an R analysis on the RCC cluster
+===============================================================
+
+Now that we have a better understanding of the memory requirements.
+
