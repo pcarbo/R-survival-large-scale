@@ -50,6 +50,9 @@ Outline of tutorial
 Elements of my hands-on tutorial approach
 =========================================
 
++ Developing good tutorials is *hard*; developing good hands-on
+tutorials is *harder*.
+
 + Don't have all the setup upfront.
 
 + Follow Software Carpentry (and Stefano Allesina's) "live coding"
@@ -232,7 +235,8 @@ What's in the workshop packet
 
 ```
 R-survival-large-scale
-  /code    # Source code used in demos.
+  /code    # Source code used in demos
+           # (and R Markdown for slides).
   /data    # "Raw" and processed data.
   /docs    # Slides and other materials.
   /extras  # Additional useful files.
@@ -614,13 +618,27 @@ Vignette #3: Speeding up R with multithreaded matrix operations
 + Many of the problems we solve in our area involve matrix-vector
 computations, often with large matrices and vectors.
 
++ For these problems, we can get multithreading (parallel computation)
+for free because multithreaded operations are already implemented in
+many BLAS and LAPACK library configurations. However, R needs to be
+set up to take advantage of these configurations.
+
+    - On midway2, R 3.4.3 is installed from source and linked to
+      OpenBLAS.
+
 + This is a very system-dependent feature of R! May require
 installation from source.
 
     - See also Microsoft R Open.
 
+Vignette #3: Speeding up R with multithreaded matrix operations
+===============================================================
+
+*Give outline here.*
+
 Vignette #4: Multithreaded R computation with parLapply
 =======================================================
+
 
 Some final thoughts
 ===================
