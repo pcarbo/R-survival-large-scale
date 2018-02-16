@@ -13,16 +13,47 @@ knitr::opts_chunk$set(comment = "#",collapse = TRUE,fig.align = "center",
 		      warning = FALSE)
 ```
 
+Tutorial aims
+=============
+
+1. Develop skills for large-scale data analysis in R, and apply these
+skills to a large-ish data set.
+
+2. Learn how to use R **non-interactively** within a high-performance
+computing environment.
+
+3. Make more effective use of the most precious commodity in
+computing---**memory**---and appreciate that R often makes poor use of it.
+
+4. Learn through **live coding**---this includes learning from mistakes!
+
 Outline of tutorial
 ===================
 
-1. Item 1.
++ Brief introduction.
 
-2. Item 2.
++ Initial setup steps.
 
-3. Item 3.
++ Vignettes:
 
-4. Item 4.
+    1. How to measure memory in R, and use it effectively.
+
+    2. How to automate an R analysis on the RCC cluster.
+
+    3. Speeding up R with multithreaded matrix operations.
+
+    4. Multithreaded R computation with parLapply.
+
+    5. Distributing your computation on the RCC cluster using
+       the SLURM engine.
+
+Elements of my hands-on tutorial approach
+=========================================
+
++ Follow Software Carpentry (and Stefano Allesina's) approach, but
+not strictly.
+
++ Don't make participants write code.
 
 It's your choice
 ================
@@ -37,7 +68,7 @@ Your may choose to...
 
 + Follow what I do on the projector.
 
-*However*, note:
+*However*,
 
 1. A few of the examples will only run on the RCC cluster.
 
@@ -46,11 +77,20 @@ Your may choose to...
 Software requirements
 ====================
 
-1. R (ideally,  version 3.4.0 or greater)
+1. R (ideally, version 3.4.0 or greater)
 
 2. python 3.x
 
 3. SLURM (this is the job scheduler on the RCC cluster)
+
+Outline of tutorial
+===================
+
++ Brief introduction.
+
++ **Initial setup steps.**
+
++ Vignettes.
 
 Initial setup (part 1)
 ======================
@@ -168,7 +208,6 @@ Also, before continuing, check your working directory:
 getwd()  # Should be .../code
 ```
 
-
 What's in the workshop packet
 =============================
 
@@ -181,6 +220,26 @@ R-survival-large-scale
   /output  # All results are stored here.
 ```
 
+Outline of tutorial
+===================
+
++ Brief introduction.
+
++ Initial setup steps.
+
++ Vignettes:
+
+    1. **How to measure memory in R, and use it effectively.**
+
+    2. How to automate an R analysis on the RCC cluster.
+
+    3. Speeding up R with multithreaded matrix operations.
+
+    4. Multithreaded R computation with parLapply.
+
+    5. Distributing your computation on the RCC cluster using
+       the SLURM engine.
+       
 Vignette #1: How to measure memory in R, and use it effectively
 ===============================================================
 
@@ -386,7 +445,28 @@ handle matrices.
 
 + For more advanced tools for memory profiling, see:
     - http://adv-r.had.co.nz/memory.html
+    - https://adv-r.hadley.nz/memory.html
     - profmem R package
+
+Outline of tutorial
+===================
+
++ Brief introduction.
+
++ Initial setup steps.
+
++ Vignettes:
+
+    1. How to measure memory in R, and use it effectively.
+
+    2. **How to automate an R analysis on the RCC cluster.**
+
+    3. Speeding up R with multithreaded matrix operations.
+
+    4. Multithreaded R computation with parLapply.
+
+    5. Distributing your computation on the RCC cluster using
+       the SLURM engine.
 
 Vignette #2: How to automate an R analysis on the RCC cluster
 =============================================================
@@ -474,14 +554,52 @@ file.
 Automating an R analysis on the RCC cluster: take-home points
 =============================================================
 
-+ I *always* develop and test R code interactively (e.g., on smaller
-data sets) before running it non-interactively.
++ I *always* first run R code interactively (on smaller data sets) to
+assess time and memory needs.
 
 + Automation is most useful when a script needs to be run many times,
 or for a long-running computation.
+
++ For long-running scripts, it is helpful to print progress to the
+console, e.g., `cat("Centering and scaling genotype matrix.\n")`.
 
 + A side benefit of the sbatch script is that it records the
 computational setup (compute time, memory, software used).
 
 + Below we will see an example of combining R scripts with sbatch
 scripts in multiple layers.
+
+Outline of tutorial
+===================
+
++ Brief introduction.
+
++ Initial setup steps.
+
++ Vignettes:
+
+    1. How to measure memory in R, and use it effectively.
+
+    2. How to automate an R analysis on the RCC cluster.
+
+    3. **Speeding up R with multithreaded matrix operations.**
+
+    4. Multithreaded R computation with parLapply.
+
+    5. Distributing your computation on the RCC cluster using
+       the SLURM engine.
+
+Vignette #3: Speeding up R with multithreaded matrix operations
+===============================================================
+
++ Many of the problems we solve in our area involve matrix-vector
+computations, often with large matrices and vectors.
+
++ This is a very system-dependent feature of R! May require
+installation from source. (See also Microsoft R Open.)
+
+Vignette #4: Multithreaded R computation with parLapply
+=======================================================
+
+Some final thoughts
+===================
