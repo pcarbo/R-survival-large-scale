@@ -649,6 +649,9 @@ export OPENBLAS_NUM_THREADS=1
 Rscript calc.pve.multicore.R 1
 ```
 
++ To see a more dramatic improvement in computation time, increase the
+sample size (n) in `sim.gwas.R`.
+
 Some final thoughts
 ===================
 

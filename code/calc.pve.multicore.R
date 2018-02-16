@@ -22,6 +22,7 @@ nc   <- as.integer(args[1])
 
 # SET UP ENVIRONMENT
 # ------------------
+library(parallel)
 source("pve.R")
 
 # LOAD DATA
@@ -48,7 +49,7 @@ cat("Computing weights for",length(h),"PVE settings.\n")
 cat("Number of threads used for BLAS operations:",
     Sys.getenv("OPENBLAS_NUM_THREADS"),"\n")
 cat("Weights are being computed separately in",nc,"threads.\n")
-timing <- system.time(logw <- compute.log.weights(K,y,sa))
+timing <- system.time(logw <- compute.log.weights.parlapply(K,y,sa,nc))
 cat("Computation took",timing["elapsed"],"seconds.\n")
 
 # SUMMARIZE RESULTS

@@ -12,7 +12,7 @@ source("sim.geno.R")
 # SCRIPT PARAMETERS
 # -----------------
 r <- 0.6   # Proportion of variance in trait explained by SNPs.
-n <- 1000  # Number of samples.
+n <- 2000  # Number of samples.
 p <- 3e5   # Number of markers (SNPs).
 
 # Initialize random number generation so that the results are
