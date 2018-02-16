@@ -473,3 +473,15 @@ file.
 
 Automating an R analysis on the RCC cluster: take-home points
 =============================================================
+
++ I *always* develop and test R code interactively (e.g., on smaller
+data sets) before running it non-interactively.
+
++ Automation is most useful when a script needs to be run many times,
+or for a long-running computation.
+
++ A side benefit of the sbatch script is that it records the
+computational setup (compute time, memory, software used).
+
++ Below we will see an example of combining R scripts with sbatch
+scripts in multiple layers.
