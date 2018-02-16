@@ -1,8 +1,0 @@
-* Better organize R and C++ function definitions among multiple files.
-
-* Add code in scale.geno.*.R scripts to check scaling of matrix columns.
-
-* Get YubiKeys.
-
-* Create reservation.
-
