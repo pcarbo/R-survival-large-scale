@@ -615,7 +615,9 @@ Vignette #3: Speeding up R with multithreaded matrix operations
 computations, often with large matrices and vectors.
 
 + This is a very system-dependent feature of R! May require
-installation from source. (See also Microsoft R Open.)
+installation from source.
+
+    - See also Microsoft R Open.
 
 Vignette #4: Multithreaded R computation with parLapply
 =======================================================
