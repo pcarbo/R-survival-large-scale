@@ -5,7 +5,7 @@
 # parameters are specified in the command line. Here is an example of
 # running this script:
 # 
-#   sbatch geno.scaled.sbatch ../data/geno.RData ../output/geno.scaled.RData
+#   sbatch scale.geno.sbatch ../data/geno.RData ../output/geno.scaled.RData
 #
 
 #SBATCH --partition=broadwl
@@ -20,6 +20,5 @@ OUTPUT=${2}
 module load R/3.4.3
 
 # Run the R script.
-echo "Running geno.scaled.automated.R"
-R CMD BATCH --no-save --no-restore '--args ${INPUT} ${OUTPUT}'
+R CMD BATCH --no-save --no-restore "--args ${INPUT} ${OUTPUT}" \
   scale.geno.automated.R ../output/geno.scaled.automated.Rout
