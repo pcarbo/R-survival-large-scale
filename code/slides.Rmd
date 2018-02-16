@@ -50,10 +50,29 @@ Outline of tutorial
 Elements of my hands-on tutorial approach
 =========================================
 
-+ Follow Software Carpentry (and Stefano Allesina's) approach, but
-not strictly.
++ Don't have all the setup upfront.
 
-+ Don't make participants write code.
++ Follow Software Carpentry (and Stefano Allesina's) "live coding"
+approach, but not strictly.
+
++ Don't make participants write their own code.
+
++ Don't make participants use the RCC cluster.
+
++ Don't provide a handout---all code should be in the slides.
+
++ Flip between typing (running the examples) and talking about it
+(what happened?).
+
++ Reduce dependencies between examples.
+
++ Create slides using R Markdown:
+
+    ```
+    cd docs
+    make slides
+    make test
+    ```
 
 It's your choice
 ================
