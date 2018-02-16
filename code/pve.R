@@ -37,3 +37,18 @@ compute.log.weight <- function (K, y, sa) {
 # settings of the prior variance parameter.
 compute.log.weights <- function (K, y, sa)
   sapply(as.list(sa),function (x) compute.log.weight(K,y,x))
+
+# This is the same as compute.log.weights, but uses the "parLapply"
+# function from the parallel package.
+compute.log.weights.parlapply <- function (K, y, sa, nc = 1) {
+  cl      <- makeCluster(nc)
+  clusterExport(cl,c("compute.log.weight","compute.log.weights"))
+  samples <- clusterSplit(cl,1:length(sa))
+  logw    <- parLapply(cl,samples,
+                       function (i, K, y, sa) compute.log.weights(K,y,sa[i]),
+                       K,y,sa)
+  logw    <- do.call(c,logw)
+  logw[unlist(samples)] <- logw
+  stopCluster(cl)
+  return(logw)
+}

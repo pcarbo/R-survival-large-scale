@@ -132,6 +132,10 @@ Download the workshop packet to your laptop.
 + Open **slides.pdf** from the **docs** folder. This is useful for
 viewing and copying the code from the slides.
 
++ We may also take a look at some of the code in the **code**
+folder. The source code can be viewed with your favourite text editor,
+or browsed on GitHub.
+
 Initial setup (part 3)
 ======================
 
@@ -619,18 +623,33 @@ installation from source.
 
     - See also Microsoft R Open.
 
+Vignette #3: Speeding up R with multithreaded matrix operations
+===============================================================
+
+Notes:
+
+```{bash, eval=FALSE}
+export OPENBLAS_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=$SLURM_CPUS_ON_NODE
+Rscript calc.pve.R
+```
+
++ Talk about `system.time`.
+
++ How much of a computation time improvement do we get from making
+more threads available to OpenBLAS?
+
 Vignette #4: Multithreaded R computation with parLapply
 =======================================================
 
 Notes:
 
 ```{bash, eval=FALSE}
-export OPENBLAS_NUM_THREADS=8
-export OPENBLAS_NUM_THREADS=$SLURM_CPUS_ON_NODE
-
+export OPENBLAS_NUM_THREADS=1
+Rscript calc.pve.multicore.R 1
 ```
-
-+ Talk about `system.time`.
 
 Some final thoughts
 ===================
+
+*What are your thoughts?*

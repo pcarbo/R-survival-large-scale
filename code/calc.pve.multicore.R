@@ -1,14 +1,24 @@
-# In this script, we will estimate the proportion of variance in the
-# phenotype (Y) that is explained by the genotypes (X).  This
-# estimation involves numerically intensive computations;
-# specifically, it involves factorizing a large, symmetric matrix
-# separately for each candidate value of the PVE ("proportion of
-# variance explained").
+# This is the same as calc.pve.R, but uses parLapply to speed up the
+# computation when multiple cores (CPUs) are available.
+#
+# To run this script using Rscript (or "batch mode"), type the
+# following in the command line:
+#
+#   Rscript calc.pve.multicore.R <nc>
+#
+# where <nc> is the number of threads to use for computing the
+# weights.
+#
 
 # SCRIPT PARAMETERS
 # -----------------
 # Candidate values for the PVE estimate
 h <- seq(0.01,0.99,0.005)
+
+# The computation of the weights is divided among this many
+# threads.
+args <- commandArgs(trailingOnly = TRUE)
+nc   <- as.integer(args[1])
 
 # SET UP ENVIRONMENT
 # ------------------
@@ -37,6 +47,7 @@ sa <- get.prior.variances(X,h)
 cat("Computing weights for",length(h),"PVE settings.\n")
 cat("Number of threads used for BLAS operations:",
     Sys.getenv("OPENBLAS_NUM_THREADS"),"\n")
+cat("Weights are being computed separately in",nc,"threads.\n")
 timing <- system.time(logw <- compute.log.weights(K,y,sa))
 cat("Computation took",timing["elapsed"],"seconds.\n")
 
