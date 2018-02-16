@@ -41,5 +41,6 @@ These materials were developed by
 [University of Chicago](https://www.uchicago.edu). Thank you to
 [Matthew Stephens](http://stephenslab.uchicago.edu) for his support
 and guidance. Also thanks to [Gao Wang](https://github.com/gaow) for
-sharing the Python script to profile memory usage.
-
+sharing the Python script to profile memory usage, and to
+[David Gerard](https://dcgerard.github.io) for sharing his code that
+ultimately improved several of the examples.
