@@ -1,4 +1,5 @@
-# TO DO: Explain here briefly what this script does.
+# This is the same as scale.geno.R, but attempts to eliminate
+# unnecessary memory allocation by "copying in place" using Rcpp.
 library(Rcpp)
 sourceCpp("scale.cpp")
 cat("Loading genotype data.\n")

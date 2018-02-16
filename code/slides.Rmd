@@ -136,12 +136,12 @@ Start htop:
 htop --user=<username>
 ```
 
-Some useful htop keyboard shortcuts:
++ Some useful htop keyboard shortcuts:
 
-+ q to quit
-+ M to sort processes by memory
-+ p to toggle program paths
-+ H to toggle threads (for multithreaded computing)
+    - q to quit
+    - M to sort processes by memory
+    - p to toggle program paths
+    - H to toggle threads (for multithreaded computing)
 
 Initial setup (part 6)
 ======================
@@ -181,8 +181,8 @@ R-survival-large-scale
   /output  # All results are stored here.
 ```
 
-Investigation: How to measure memory in R, and use it effectively
-=================================================================
+Vignette #1: How to measure memory in R, and use it effectively
+===============================================================
 
 We have two tasks:
 
@@ -201,8 +201,8 @@ We will use R for both tasks.
 
     2. **monitor_memory.py**, a Python script.
 
-Investigation: How to measure memory in R, and use it effectively
-=================================================================
+Vignette #1: How to measure memory in R, and use it effectively
+===============================================================
 
 Outline of the vignette:
 
@@ -388,8 +388,41 @@ handle matrices.
     - http://adv-r.had.co.nz/memory.html
     - profmem R package
 
-Investigation: How to automate an R analysis on the RCC cluster
-===============================================================
+Vignette #2: How to automate an R analysis on the RCC cluster
+=============================================================
 
-Now that we have a better understanding of the memory requirements.
+Now that we have a good understanding of the memory needs for the
+matrix scaling task, let's automate the analysis.
+
+This will involve two steps:
+
+1. Develop an R script that accepts arguments from the command-line shell.
+
+2. Develop a script for automating the job submission with the SLURM
+scheduler.
+
+Running an R script from the shell
+==================================
+
+We want this script to work for any genotype data file provided as
+input, and we want to be able to choose the location where the scaled
+matrix is saved.
+
++ Use the **commandArgs** function to read in command-line arguments. 
+
++ This is implemented in **scale.geno.automated.R**.
+
+To illustrate its features, let's use **R CMD BATCH** instead of
+Rscript to run the script from the command line:
+
+```{bash, eval=FALSE}
+R CMD BATCH --no-save --no-restore \
+  '--args ../data/geno.RData 
+   ../output/geno.scaled.RData' \
+  scale.geno.automated.R \
+  ../output/geno.scaled.automated.out
+```
+
+Submitting an R script to the SLURM scheduler
+=============================================
 
