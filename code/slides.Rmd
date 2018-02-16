@@ -394,7 +394,11 @@ Vignette #2: How to automate an R analysis on the RCC cluster
 Now that we have a good understanding of the memory needs for the
 matrix scaling task, let's automate the analysis.
 
-This will involve two steps:
++ We want this script to work for any genotype data file provided as
+input, and we want to be able to choose the location where the scaled
+matrix is saved.
+
+On the RCC cluster, this will involve two steps:
 
 1. Develop an R script that accepts arguments from the command-line shell.
 
@@ -404,15 +408,13 @@ scheduler.
 Running an R script from the shell
 ==================================
 
-We want this script to work for any genotype data file provided as
-input, and we want to be able to choose the location where the scaled
-matrix is saved.
+We take these steps to automate the analysis:
 
 + Use the **commandArgs** function to read in command-line arguments. 
 
 + This is implemented in **scale.geno.automated.R**.
 
-To illustrate its features, let's use **R CMD BATCH** instead of
+  To illustrate its features, let's use **R CMD BATCH** instead of
 Rscript to run the script from the command line:
 
 ```{bash, eval=FALSE}
@@ -423,6 +425,51 @@ R CMD BATCH --no-save --no-restore \
   ../output/geno.scaled.automated.out
 ```
 
-Submitting an R script to the SLURM scheduler
-=============================================
+Submitting an R script to SLURM (part 1)
+========================================
 
+On the RCC cluster, a completely automated analysis should include
+instructions for allocating resources with SLURM.
+
++ We still want this script to work for any input and output file.
+
+This is the most basic script for accomplishing this:
+
+```{bash, eval=FALSE}
+#SBATCH --partition=broadwl
+#SBATCH --mem=3G
+#SBATCH --time=00:10:00
+INPUT=${1}
+OUTPUT=${2}
+module load R/3.4.3
+R CMD BATCH --no-save --no-restore \
+  '--args ${INPUT} ${OUTPUT}' \
+  scale.geno.automated.R \
+  ../output/geno.scaled.automated.Rout
+```
+
+See also file **scale.geno.sbatch**.
+
+Submitting an R script to SLURM (part 2)
+========================================
+
+Run this command to schedule an analysis:
+
+```{bash, eval=FALSE}
+sbatch scale.geno.sbatch ../data/geno.RData \
+  ../output/geno.scaled.RData
+```
+
+While it is running, we can monitor the job's status:
+
+```{bash, eval=FALSE}
+squeue --user=<cnetid> | less -S
+```
+
++ Optionally, add the lines in **extras/bashrc** to your `~/.bashrc`
+file.
+
++ What happens when we change "3G" to "2G" in the sbatch script?
+
+Automating an R analysis on the RCC cluster: take-home points
+=============================================================
