@@ -639,6 +639,15 @@ Vignette #3: Speeding up R with multithreaded matrix operations
 Vignette #4: Multithreaded R computation with parLapply
 =======================================================
 
+Notes:
+
+```{bash, eval=FALSE}
+export OPENBLAS_NUM_THREADS=8
+export OPENBLAS_NUM_THREADS=$SLURM_CPUS_ON_NODE
+
+```
+
++ Talk about `system.time`.
 
 Some final thoughts
 ===================
