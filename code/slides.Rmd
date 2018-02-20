@@ -40,12 +40,14 @@ Outline of tutorial
 
     2. How to automate an R analysis on the RCC cluster.
 
-    3. Speeding up R with multithreaded matrix operations.
+    3. Speeding up R with multithreaded matrix operations.*
 
-    4. Multithreaded R computation with parLapply.
+    4. Multithreaded R computation with parLapply.*
 
     5. Distributing your computation on the RCC cluster using
-       the SLURM engine.
+       the SLURM engine.*
+
+\* Incomplete.
 
 Elements of my hands-on tutorial approach
 =========================================
@@ -212,12 +214,18 @@ htop --user=<username>
 Initial setup (part 6)
 ======================
 
-Move to the **code** folder in the git repository, and start up an
-interactive R environment:
+Move to the **code** folder in the git repository. And on the RCC
+cluster, load Python3 and R:
 
 ```{bash, eval=FALSE}
 cd code
+module load python/3.5.2
 module load R
+```
+
+Start up an interactive R environment:
+
+```{bash, eval=FALSE}
 R --no-save
 ```
 
@@ -260,13 +268,15 @@ Outline of tutorial
 
     2. How to automate an R analysis on the RCC cluster.
 
-    3. Speeding up R with multithreaded matrix operations.
+    3. Speeding up R with multithreaded matrix operations.*
 
-    4. Multithreaded R computation with parLapply.
+    4. Multithreaded R computation with parLapply.*
 
     5. Distributing your computation on the RCC cluster using
-       the SLURM engine.
-       
+       the SLURM engine.*
+
+\* Incomplete.
+
 Vignette #1: How to measure memory in R, and use it effectively
 ===============================================================
 
@@ -310,9 +320,6 @@ $p = 300,\!000$ SNPs and 1% missing genotypes.
 source("sim.geno.R")
 set.seed(1)
 geno <- sim.geno(n = 1000,p = 3e5,na.rate = 0.01)
-dim(geno)
-range(geno,na.rm = TRUE)
-mean(is.na(geno))
 save(list = "geno",file = "../data/geno.RData")
 ```
 
@@ -459,8 +466,8 @@ attempts? Is there still room for improvement?
 Memory allocation in R: take-home points
 ========================================
 
-+ R duplicates objects aggressively. This can be an issue with objects
-are large.
++ R duplicates objects aggressively ("copy on modify"). This can be an
+issue with objects are large.
 
 + Rcpp can circumvent some of R's limitations, but requires much more
 effort!
@@ -488,12 +495,14 @@ Outline of tutorial
 
     2. **How to automate an R analysis on the RCC cluster.**
 
-    3. Speeding up R with multithreaded matrix operations.
+    3. Speeding up R with multithreaded matrix operations.*
 
-    4. Multithreaded R computation with parLapply.
+    4. Multithreaded R computation with parLapply.*
 
     5. Distributing your computation on the RCC cluster using
-       the SLURM engine.
+       the SLURM engine.*
+
+\* Incomplete.
 
 Vignette #2: How to automate an R analysis on the RCC cluster
 =============================================================
@@ -609,12 +618,14 @@ Outline of tutorial
 
     2. How to automate an R analysis on the RCC cluster.
 
-    3. **Speeding up R with multithreaded matrix operations.**
+    3. **Speeding up R with multithreaded matrix operations.**\*
 
-    4. Multithreaded R computation with parLapply.
+    4. Multithreaded R computation with parLapply.*
 
     5. Distributing your computation on the RCC cluster using
-       the SLURM engine.
+       the SLURM engine.*
+
+\* Incomplete.
 
 Vignette #3: Speeding up R with multithreaded matrix operations
 ===============================================================
@@ -638,20 +649,32 @@ installation from source.
 Vignette #3: Speeding up R with multithreaded matrix operations
 ===============================================================
 
-*Give outline here.*
+First generate the data set by running:
 
-Vignette #4: Multithreaded R computation with parLapply
-=======================================================
+```{bash, eval=FALSE}
+Rscript sim.gwas.R
+```
 
-Notes:
+This will create a file `gwas.RData` in the data directory.
+
+Vignette #3: Speeding up R with multithreaded matrix operations
+===============================================================
+
+Try running the analysis with no multithreaded matrix operations:
 
 ```{bash, eval=FALSE}
 export OPENBLAS_NUM_THREADS=1
+Rscript calc.pve.R
+```
+
+Then try running it with 8 threads:
+
+```{bash, eval=FALSE}
 export OPENBLAS_NUM_THREADS=$SLURM_CPUS_ON_NODE
 Rscript calc.pve.R
 ```
 
-+ Talk about `system.time`.
++ Explain how to interpret `system.time`.
 
 + How much of a computation time improvement do we get from making
 more threads available to OpenBLAS?
@@ -659,17 +682,35 @@ more threads available to OpenBLAS?
 Vignette #4: Multithreaded R computation with parLapply
 =======================================================
 
-Notes:
+Here we will run the same analysis as the previous vignette, but we
+will se `parLapply` to speed up the computation when multiple cores
+(CPUs) are available.
+
+First try with 8 threads for OpenBLAS, and no parLapply
+multithreading:
 
 ```{bash, eval=FALSE}
-export OPENBLAS_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=8
 Rscript calc.pve.multicore.R 1
 ```
 
-+ To see a more dramatic improvement in computation time, increase the
-sample size (n) in `sim.gwas.R`.
+Next, try with 8 threads for parLapply, and no multithreaded matrix
+operations:
+
+```{bash, eval=FALSE}
+export OPENBLAS_NUM_THREADS=1
+Rscript calc.pve.multicore.R 8
+```
+
+Which parallel computing scheme is more efficient---parLapply, or
+multithreaded matrix operations?
+
+Vignette #5: Distributing computation using SLURM
+=================================================
+
+*Add introduction to vignette here.*
 
 Some final thoughts
 ===================
 
-*What are your thoughts?*
+*Add final thoughts and recap here.*
