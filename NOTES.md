@@ -1,6 +1,12 @@
 # Instructor notes
 
-**Instructor in-class setup:**
+**Suggested improvements**
+
++ Organize source code in `code` directory by vignette.
+
++ Create bash script to set up environment on RCC cluster (midway2).
+
+**Instructor in-class setup**
 
 + Arrange chairs and tables.
 + Clean up Desktop and quit applications.
