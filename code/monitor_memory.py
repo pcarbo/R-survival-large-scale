@@ -70,7 +70,7 @@ class ProcessTimer:
 
           rss_memory += mem_info[0]
           vms_memory += mem_info[1]
-        except psutil.NoSuchProcess:
+        except (psutil.NoSuchProcess, psutil.ZombieProcess, psutil.AccessDenied):
           
           # Sometimes a subprocess descendant will have terminated
           # between the time we obtain a list of descendants, and the
@@ -87,7 +87,7 @@ class ProcessTimer:
       self.max_vms_memory = max(self.max_vms_memory,vms_memory)
       self.max_rss_memory = max(self.max_rss_memory,rss_memory)
 
-    except psutil.NoSuchProcess:
+    except (psutil.NoSuchProcess, psutil.ZombieProcess, psutil.AccessDenied):
       return self.check_execution_state()
 
     return self.check_execution_state()
@@ -112,7 +112,7 @@ class ProcessTimer:
           pp.kill()
         else:
           pp.terminate()
-      except psutil.NoSuchProcess:
+      except (psutil.NoSuchProcess, psutil.ZombieProcess, psutil.AccessDenied):
         pass
 
 def takewhile_excluding(iterable, value = ['|', '<', '>']):

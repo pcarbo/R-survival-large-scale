@@ -99,7 +99,7 @@ Your may choose to...
 2. The examples may not produce the exact same result on your laptop.
 
 Software requirements
-====================
+=====================
 
 1. R (ideally, version 3.4.0 or greater)
 
